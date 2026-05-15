@@ -9,12 +9,12 @@ Locacao {
     private String dataLocacao;
     private String status;
 
-    public Locacao(int id, Aluno aluno, Equipamento equipamento, String dataLocacao, String status) {
+    public Locacao(int id, Aluno aluno, Equipamento equipamento, String dataLocacao) {
         this.id = id;
         this.aluno = aluno;
         this.equipamento = equipamento;
         this.dataLocacao = dataLocacao;
-        this.status = status;
+        this.status = "Em andamento";
     }
 
     public int getId() {

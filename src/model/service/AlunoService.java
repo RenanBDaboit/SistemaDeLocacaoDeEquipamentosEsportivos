@@ -1,15 +1,24 @@
 package model.service;
 
 import model.entity.Aluno;
+import model.repository.AlunoRepository;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class AlunoService {
 
-    public boolean cadastrar(int id, String nome, int matricula, HashMap<Integer, Aluno> alunos){
+    public boolean cadastrar(int id, String nome, int matricula, AlunoRepository repository){
 
-        if (id <= 0){
+
+        boolean idDuplicado = false;
+
+        for (Map.Entry<Integer, Aluno> entry : repository.listar().entrySet()){
+            if (entry.getKey() == id){
+                idDuplicado = true;
+            }
+        }
+
+        if (id <= 0 || idDuplicado){
             return false;
         }
 
@@ -19,7 +28,7 @@ public class AlunoService {
 
         boolean matriculaDuplicada = false;
 
-        for (Map.Entry<Integer, Aluno> entry : alunos.entrySet()){
+        for (Map.Entry<Integer, Aluno> entry : repository.listar().entrySet()){
             if (matricula == entry.getValue().getMatricula()){
                 matriculaDuplicada = true;
             }
@@ -29,6 +38,7 @@ public class AlunoService {
             return false;
         }
 
+        repository.salvar(new Aluno(id, nome, matricula));
         return true;
     }
 }
