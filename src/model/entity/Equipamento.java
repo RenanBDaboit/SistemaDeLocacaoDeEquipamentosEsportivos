@@ -45,4 +45,14 @@ public class Equipamento {
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
     }
+
+    @Override
+    public String toString() {
+        return "Equipamento{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", disponivel=" + disponivel +
+                '}';
+    }
 }

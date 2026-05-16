@@ -3,27 +3,57 @@ package model.service;
 import model.entity.Aluno;
 import model.entity.Equipamento;
 import model.entity.Locacao;
+import model.repository.AlunoRepository;
+import model.repository.EquipamentoRepository;
 import model.repository.LocacaoRepository;
 
 import java.util.Map;
 
 public class LocacaoService {
 
-    public boolean cadastrar(int id, Aluno aluno, Equipamento equipamento, String dataLocacao, LocacaoRepository repository){
+    public boolean cadastrar(int id, int idAluno, int idEquipamento, String dataLocacao, AlunoRepository alunoRepository, EquipamentoRepository equipamentoRepository, LocacaoRepository repository) {
 
         boolean idDuplicado = false;
 
-        for (Map.Entry<Integer, Locacao> entry : repository.listar().entrySet()){
-            if (entry.getKey() == id){
+        for (Map.Entry<Integer, Locacao> entry : repository.listar().entrySet()) {
+            if (entry.getKey() == id) {
                 idDuplicado = true;
             }
         }
 
-        if (id <= 0 || idDuplicado){
+        if (id <= 0 || idDuplicado) {
             return false;
         }
 
-        if (dataLocacao.isBlank()){
+        boolean alunoNaoEncontrado = true;
+        Aluno aluno = null;
+
+        for (Map.Entry<Integer, Aluno> entry : alunoRepository.listar().entrySet()) {
+            if (idAluno == entry.getKey()){
+                alunoNaoEncontrado = false;
+                aluno = entry.getValue();
+            }
+        }
+
+        if (alunoNaoEncontrado) {
+            return false;
+        }
+
+        boolean equipamentoNaoEncontrado = true;
+        Equipamento equipamento = null;
+
+        for (Map.Entry<Integer, Equipamento> entry : equipamentoRepository.listar().entrySet()){
+            if (idEquipamento == entry.getKey()){
+                equipamentoNaoEncontrado = false;
+                equipamento = entry.getValue();
+            }
+        }
+
+        if (equipamentoNaoEncontrado){
+            return false;
+        }
+
+        if (dataLocacao.isBlank()) {
             return false;
         }
 
