@@ -35,4 +35,13 @@ public class Aluno {
     public void setMatricula(int matricula) {
         this.matricula = matricula;
     }
+
+    @Override
+    public String toString() {
+        return "Aluno{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", matricula=" + matricula +
+                '}';
+    }
 }

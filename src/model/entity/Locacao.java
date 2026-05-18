@@ -1,7 +1,6 @@
 package model.entity;
 
-public class
-Locacao {
+public class Locacao {
 
     private int id;
     private Aluno aluno;
@@ -55,5 +54,16 @@ Locacao {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Locacao{" +
+                "id=" + id +
+                ", aluno=" + aluno +
+                ", equipamento=" + equipamento +
+                ", dataLocacao='" + dataLocacao + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
