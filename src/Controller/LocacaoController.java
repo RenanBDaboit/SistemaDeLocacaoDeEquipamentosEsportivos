@@ -24,7 +24,7 @@ public class LocacaoController {
     }
 
     public boolean cadastrar(int id, int idAluno, int idEquipamento, String dataLocacao) {
-        return service.cadastrar(id, idAluno, idEquipamento, dataLocacao, repository);
+        return service.cadastrar(id, idAluno, idEquipamento, dataLocacao, alunoRepository, equipamentoRepository, repository);
     }
 
     public HashMap<Integer, Aluno> listarAlunos(){
