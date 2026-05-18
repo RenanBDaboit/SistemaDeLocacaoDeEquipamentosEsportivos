@@ -1,6 +1,6 @@
 package view;
 
-import Controller.EquipamentoController;
+import controller.EquipamentoController;
 
 import java.util.Scanner;
 

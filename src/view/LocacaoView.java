@@ -3,7 +3,6 @@ package view;
 import controller.LocacaoController;
 import model.entity.Aluno;
 import model.entity.Equipamento;
-import model.entity.Locacao;
 
 import java.util.Map;
 import java.util.Scanner;
