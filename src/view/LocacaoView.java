@@ -17,6 +17,37 @@ public class LocacaoView {
         this.controller = controller;
     }
 
+    public void menuEquipamento(){
+        int op;
+        do{
+            System.out.println("+===================================+");
+            System.out.println("|            MENU LOCAÇÃO           |");
+            System.out.println("+===================================+");
+            System.out.println("| [1] Realizar uma locação          |");
+            System.out.println("| [2] Listar locação                |");
+            System.out.println("| [3] Atualizar uma locação         |");
+            System.out.println("| [4] Finalizar/Remover uma locação |");
+            System.out.println("| [0] Sair                          |");
+            System.out.println("+===================================+");
+            System.out.print("Escolha uma opção: ");
+            op = Integer.parseInt(scanner.nextLine());
+
+            switch (op){
+                case 1 ->{
+                    cadastrar();
+                }
+
+                case 0 ->{
+                    System.out.println("Saindo...");
+                }
+
+                default -> {
+                    System.out.println("Opção incorreta!");
+                }
+            }
+        } while (op != 0);
+    }
+
     public void cadastrar(){
 
         System.out.println("Digite o ID");
