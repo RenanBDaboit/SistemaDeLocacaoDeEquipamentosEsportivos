@@ -9,6 +9,10 @@ public class EquipamentoView {
 
     private EquipamentoController controller;
 
+    public EquipamentoView(EquipamentoController controller) {
+        this.controller = controller;
+    }
+
     public void setController(EquipamentoController controller) {
         this.controller = controller;
     }

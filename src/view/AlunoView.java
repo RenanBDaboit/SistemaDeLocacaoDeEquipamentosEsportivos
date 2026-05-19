@@ -6,10 +6,14 @@ import java.util.Scanner;
 
 public class AlunoView {
 
-    private AlunoController controller;
+    private AlunoController alunoController;
 
-    public void setController(AlunoController controller) {
-        this.controller = controller;
+    public AlunoView(AlunoController alunoController) {
+        this.alunoController = alunoController;
+    }
+
+    public void setController(AlunoController alunoController) {
+        this.alunoController = alunoController;
     }
 
     private final Scanner scanner = new Scanner(System.in);
@@ -54,7 +58,7 @@ public class AlunoView {
         System.out.print("Digite a matrícula: ");
         int matricula = Integer.parseInt(scanner.nextLine());
 
-        boolean sucesso = controller.cadastrar(id, nome, matricula);
+        boolean sucesso = alunoController.cadastrar(id, nome, matricula);
 
         if (sucesso){
             System.out.println("Sucesso ao cadastrar Aluno");
