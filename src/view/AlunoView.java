@@ -14,15 +14,44 @@ public class AlunoView {
 
     private final Scanner scanner = new Scanner(System.in);
 
+    public void menuAluno(){
+        int op;
+        do{
+            System.out.println("+==============================+");
+            System.out.println("|          MENU ALUNO          |");
+            System.out.println("+==============================+");
+            System.out.println("| [1] Cadastrar um aluno(a)    |");
+            System.out.println("| [0] Sair                     |");
+            System.out.println("+==============================+");
+            System.out.print("Escolha uma opção: ");
+            op = Integer.parseInt(scanner.nextLine());
+
+            switch (op){
+                case 1 ->{
+                    cadastrar();
+                }
+
+                case 0 ->{
+                    System.out.println("Saindo...");
+                }
+
+                default -> {
+                    System.out.println("Opção incorreta!");
+                }
+            }
+        } while (op != 0);
+
+    }
+
     public void cadastrar(){
 
-        System.out.println("Digite o ID");
+        System.out.print("Digite o ID: ");
         int id = Integer.parseInt(scanner.nextLine());
 
-        System.out.println("Digite o nome");
+        System.out.print("Digite o nome: ");
         String nome = scanner.nextLine();
 
-        System.out.println("Digite a matrícula");
+        System.out.print("Digite a matrícula: ");
         int matricula = Integer.parseInt(scanner.nextLine());
 
         boolean sucesso = controller.cadastrar(id, nome, matricula);
