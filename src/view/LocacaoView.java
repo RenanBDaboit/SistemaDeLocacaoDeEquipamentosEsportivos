@@ -3,6 +3,10 @@ package view;
 import controller.LocacaoController;
 import model.entity.Aluno;
 import model.entity.Equipamento;
+import model.entity.Locacao;
+import model.repository.AlunoRepository;
+import model.repository.LocacaoRepository;
+import model.repository.EquipamentoRepository;
 
 import java.util.Map;
 import java.util.Scanner;
@@ -10,14 +14,28 @@ import java.util.Scanner;
 public class LocacaoView {
 
     private final Scanner scanner = new Scanner(System.in);
+    private LocacaoController locacaoController;
+    private LocacaoRepository locacaoRepository;
+    private AlunoRepository alunoRepository;
+    private EquipamentoRepository equipamentoRepository;
 
-    private LocacaoController controller;
-
-    public void setController(LocacaoController controller) {
-        this.controller = controller;
+    public LocacaoView(LocacaoController locacaoController, LocacaoRepository locacaoRepository, 
+                       AlunoRepository alunoRepository, EquipamentoRepository equipamentoRepository) {
+        this.locacaoController = locacaoController;
+        this.locacaoRepository = locacaoRepository;
+        this.alunoRepository = alunoRepository;
+        this.equipamentoRepository = equipamentoRepository;
     }
 
-    public void menuEquipamento(){
+    public void setController(LocacaoController locacaoController, LocacaoRepository locacaoRepository,
+                              AlunoRepository alunoRepository, EquipamentoRepository equipamentoRepository) {
+        this.locacaoController = locacaoController;
+        this.locacaoRepository = locacaoRepository;
+        this.alunoRepository = alunoRepository;
+        this.equipamentoRepository = equipamentoRepository;
+    }
+
+    public void menuLocacao(){
         int op;
         do{
             System.out.println("+===================================+");
@@ -37,6 +55,18 @@ public class LocacaoView {
                     cadastrar();
                 }
 
+                case 2 ->{
+                    listarLocacao();
+                }
+                
+                case 3 ->{
+                    atualizarLocacao();
+                }
+                
+                case 4 ->{
+                    finalizarRemoverLocacao();
+                }
+                
                 case 0 ->{
                     System.out.println("Saindo...");
                 }
@@ -50,21 +80,23 @@ public class LocacaoView {
 
     public void cadastrar(){
 
-        System.out.println("Digite o ID");
+        System.out.print("Digite o ID: ");
         int id = Integer.parseInt(scanner.nextLine());
 
         listarAlunos();
-        System.out.println("Digite o ID do Aluno");
+        System.out.print("Digite o ID do Aluno: ");
         int idAluno = Integer.parseInt(scanner.nextLine());
 
         listarEquipamentos();
-        System.out.println("Digite  ID do equipamento");
+        System.out.print("Digite  ID do equipamento: ");
         int idEquipamento = Integer.parseInt(scanner.nextLine());
 
-        System.out.println("Digite a data da locação");
+        System.out.print("Digite a data da locação (DD/MM/AAAA): ");
         String dataLocacao = scanner.nextLine();
 
-        boolean sucesso = controller.cadastrar(id, idAluno, idEquipamento, dataLocacao);
+        Locacao.Status status = Locacao.Status.EM_ANDAMENTO;
+
+        boolean sucesso = locacaoController.cadastrar(id, idAluno, idEquipamento, dataLocacao, status);
 
         if (sucesso){
             System.out.println("Locação cadastrada com sucesso");
@@ -75,14 +107,68 @@ public class LocacaoView {
     }
 
     public void listarAlunos(){
-        for (Map.Entry<Integer, Aluno> entry : controller.listarAlunos().entrySet()){
+        for (Map.Entry<Integer, Aluno> entry : locacaoController.listarAlunos().entrySet()){
             System.out.println(entry.getValue());
         }
     }
 
     public void listarEquipamentos(){
-        for (Map.Entry<Integer, Equipamento> entry : controller.listarEquipamentos().entrySet()){
+        for (Map.Entry<Integer, Equipamento> entry : locacaoController.listarEquipamentos().entrySet()){
             System.out.println(entry.getValue());
         }
+    }
+    
+    public void listarLocacao(){
+        for(Locacao locacao : locacaoRepository.listar().values()){
+            System.out.println(locacao);
+        }
+    }
+    
+    public void atualizarLocacao(){
+        listarLocacao();
+        System.out.print("ID da locação para atualizar: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        
+        listarAlunos();
+        System.out.print("Novo aluno: ");
+        int idAluno = Integer.parseInt(scanner.nextLine());
+        
+        listarEquipamentos();
+        System.out.print("Novo equipamento: ");
+        int idEquipamento = Integer.parseInt(scanner.nextLine());
+        
+        listarLocacao();
+        System.out.print("Nova data de locação (DD/MM/AAAA): ");
+        String dataLocacao = scanner.nextLine();
+        
+        Locacao.Status status = Locacao.Status.EM_ANDAMENTO;
+
+        boolean sucesso = locacaoController.atualizar(id, idAluno, idEquipamento, dataLocacao, status);
+
+        if (sucesso){
+            System.out.println("Locação atualizada com sucesso");
+        }
+        else {
+            System.out.println("Erro ao atualizar a locação");
+        }
+    }
+    
+    public void finalizarRemoverLocacao(){
+        listarLocacao();
+        System.out.print("ID da locação para finalizar: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        Locacao locacao = locacaoRepository.buscarPorId(id);
+        
+        if(locacao == null){
+            System.out.println("Locação não encontrada!");
+            return;
+        }
+        
+        locacao.setStatus(Locacao.Status.FINALIZADO);
+        
+        locacaoRepository.salvar(locacao);
+        
+        locacaoRepository.remover(id);
+        System.out.println("Locação finalizada com sucesso (Status: FINALIZADA)!");
     }
 }

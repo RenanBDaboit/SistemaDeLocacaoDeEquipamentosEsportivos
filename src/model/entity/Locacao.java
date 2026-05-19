@@ -6,14 +6,19 @@ public class Locacao {
     private Aluno aluno;
     private Equipamento equipamento;
     private String dataLocacao;
-    private String status;
-
-    public Locacao(int id, Aluno aluno, Equipamento equipamento, String dataLocacao) {
+    public enum Status {
+        EM_ANDAMENTO,
+        FINALIZADO
+    }
+    
+    public Status status;
+    
+    public Locacao(int id, Aluno aluno, Equipamento equipamento, String dataLocacao, Status status) {
         this.id = id;
         this.aluno = aluno;
         this.equipamento = equipamento;
         this.dataLocacao = dataLocacao;
-        this.status = "Em andamento";
+        this.status = status;
     }
 
     public int getId() {
@@ -48,11 +53,11 @@ public class Locacao {
         this.dataLocacao = dataLocacao;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
