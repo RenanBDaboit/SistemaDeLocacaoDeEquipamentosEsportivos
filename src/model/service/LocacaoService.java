@@ -60,6 +60,7 @@ public class LocacaoService {
         }
 
         repository.salvar(new Locacao(id, aluno, equipamento, dataLocacao, Locacao.Status.EM_ANDAMENTO));
+        equipamento.setDisponivel(false);
         return true;
     }
     
@@ -124,13 +125,15 @@ public class LocacaoService {
 
         Locacao locacao = repository.buscarPorId(id);
 
+        locacao.getEquipamento().setDisponivel(true);
+        
         locacao.setAluno(aluno);
         locacao.setEquipamento(equipamento);
         locacao.setDataLocacao(dataLocacao);
         locacao.setStatus(status);
 
         repository.salvar(locacao);
-        
+        equipamento.setDisponivel(false);
         return true;
     }
 }
