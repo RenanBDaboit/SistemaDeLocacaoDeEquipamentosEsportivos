@@ -48,15 +48,26 @@ public class AlunoView {
     }
 
     public void cadastrar(){
+        int id;
+        int matricula;
 
-        System.out.print("Digite o ID: ");
-        int id = Integer.parseInt(scanner.nextLine());
-
-        System.out.print("Digite o nome: ");
+        System.out.println("Digite o ID");
+        try {
+            id = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            id = -1;
+        }
+        System.out.println("Digite o nome");
         String nome = scanner.nextLine();
 
-        System.out.print("Digite a matrícula: ");
-        int matricula = Integer.parseInt(scanner.nextLine());
+        System.out.println("Digite a matrícula");
+        try {
+            matricula = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            matricula = -1;
+        }
 
         boolean sucesso = alunoController.cadastrar(id, nome, matricula);
 
