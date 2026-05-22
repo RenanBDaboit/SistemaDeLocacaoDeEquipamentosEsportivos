@@ -48,32 +48,36 @@ public class LocacaoView {
             System.out.println("| [0] Sair                          |");
             System.out.println("+===================================+");
             System.out.print("Escolha uma opção: ");
-            op = Integer.parseInt(scanner.nextLine());
+            try {
+                op = Integer.parseInt(scanner.nextLine());
+                switch (op){
+                    case 1 ->{
+                        cadastrar();
+                    }
 
-            switch (op){
-                case 1 ->{
-                    cadastrar();
-                }
+                    case 2 ->{
+                        listarLocacao();
+                    }
 
-                case 2 ->{
-                    listarLocacao();
-                }
-                
-                case 3 ->{
-                    atualizarLocacao();
-                }
-                
-                case 4 ->{
-                    finalizarRemoverLocacao();
-                }
-                
-                case 0 ->{
-                    System.out.println("Saindo...");
-                }
+                    case 3 ->{
+                        atualizarLocacao();
+                    }
 
-                default -> {
-                    System.out.println("Opção incorreta!");
+                    case 4 ->{
+                        finalizarRemoverLocacao();
+                    }
+
+                    case 0 ->{
+                        System.out.println("Saindo...");
+                    }
+
+                    default -> {
+                        System.out.println("Opção incorreta!");
+                    }
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("Entre com um número");
+                op = -1;
             }
         } while (op != 0);
     }
@@ -111,7 +115,7 @@ public class LocacaoView {
         System.out.println("Digite a data da locação");
         String dataLocacao = scanner.nextLine();
 
-        boolean sucesso = locacaoController.cadastrar(id, idAluno, idEquipamento, dataLocacao, Locacao.Status.EM_ANDAMENTO);
+        boolean sucesso = locacaoController.cadastrar(id, idAluno, idEquipamento, dataLocacao);
 
         if (sucesso){
             System.out.println("Locação cadastrada com sucesso");
@@ -140,25 +144,41 @@ public class LocacaoView {
     }
     
     public void atualizarLocacao(){
+        int id;
+        int idAluno;
+        int idEquipamento;
+
         listarLocacao();
         System.out.print("ID da locação para atualizar: ");
-        int id = Integer.parseInt(scanner.nextLine());
-        
+        try {
+            id = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            id = -1;
+        }
+
         listarAlunos();
         System.out.print("Novo aluno: ");
-        int idAluno = Integer.parseInt(scanner.nextLine());
-        
+        try {
+            idAluno = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            idAluno = -1;
+        }
+
         listarEquipamentos();
         System.out.print("Novo equipamento: ");
-        int idEquipamento = Integer.parseInt(scanner.nextLine());
-        
-        listarLocacao();
+        try {
+            idEquipamento = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            idEquipamento = -1;
+        }
+
         System.out.print("Nova data de locação (DD/MM/AAAA): ");
         String dataLocacao = scanner.nextLine();
-        
-        Locacao.Status status = Locacao.Status.EM_ANDAMENTO;
 
-        boolean sucesso = locacaoController.atualizar(id, idAluno, idEquipamento, dataLocacao, status);
+        boolean sucesso = locacaoController.atualizar(id, idAluno, idEquipamento, dataLocacao);
 
         if (sucesso){
             System.out.println("Locação atualizada com sucesso");
@@ -169,9 +189,16 @@ public class LocacaoView {
     }
     
     public void finalizarRemoverLocacao(){
+        int id;
+
         listarLocacao();
         System.out.print("ID da locação para finalizar: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        try {
+            id = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            id = -1;
+        }
         Locacao locacao = locacaoRepository.buscarPorId(id);
         
         if(locacao == null){
