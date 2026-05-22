@@ -49,14 +49,19 @@ public class EquipamentoView {
     }
 
     public void cadastrar(){
+        int id;
 
-        System.out.print("Digite o ID: ");
-        int id = Integer.parseInt(scanner.nextLine());
-
-        System.out.print("Digite o Nome: ");
+        System.out.println("Digite o ID: ");
+        try {
+            id = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            id = -1;
+        }
+        System.out.println("Digite o Nome: ");
         String nome = scanner.nextLine();
 
-        System.out.print("Digite o Tipo: ");
+        System.out.println("Digite o Tipo: ");
         String tipo = scanner.nextLine();
 
         boolean sucesso = controller.cadastrar(id, nome, tipo);
@@ -68,6 +73,4 @@ public class EquipamentoView {
             System.out.println("Erro ao cadastrar equipamento");
         }
     }
-
-
 }

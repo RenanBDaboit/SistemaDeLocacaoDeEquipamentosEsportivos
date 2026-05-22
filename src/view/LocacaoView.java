@@ -79,24 +79,39 @@ public class LocacaoView {
     }
 
     public void cadastrar(){
+        int id;
+        int idAluno;
+        int idEquipamento;
 
-        System.out.print("Digite o ID: ");
-        int id = Integer.parseInt(scanner.nextLine());
-
+        System.out.println("Digite o ID");
+        try {
+            id = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            id = -1;
+        }
         listarAlunos();
-        System.out.print("Digite o ID do Aluno: ");
-        int idAluno = Integer.parseInt(scanner.nextLine());
+        System.out.println("Digite o ID do Aluno");
+        try {
+            idAluno = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            idAluno = -1;
+        }
 
         listarEquipamentos();
-        System.out.print("Digite  ID do equipamento: ");
-        int idEquipamento = Integer.parseInt(scanner.nextLine());
+        System.out.println("Digite  ID do equipamento");
+        try {
+            idEquipamento = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entre com números");
+            idEquipamento = -1;
+        }
 
-        System.out.print("Digite a data da locação (DD/MM/AAAA): ");
+        System.out.println("Digite a data da locação");
         String dataLocacao = scanner.nextLine();
 
-        Locacao.Status status = Locacao.Status.EM_ANDAMENTO;
-
-        boolean sucesso = locacaoController.cadastrar(id, idAluno, idEquipamento, dataLocacao, status);
+        boolean sucesso = locacaoController.cadastrar(id, idAluno, idEquipamento, dataLocacao, Locacao.Status.EM_ANDAMENTO);
 
         if (sucesso){
             System.out.println("Locação cadastrada com sucesso");
