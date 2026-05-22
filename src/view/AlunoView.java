@@ -20,6 +20,7 @@ public class AlunoView {
 
     public void menuAluno(){
         int op;
+
         do{
             System.out.println("+==============================+");
             System.out.println("|          MENU ALUNO          |");
