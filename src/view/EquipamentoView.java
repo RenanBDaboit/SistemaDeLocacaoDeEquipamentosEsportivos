@@ -29,23 +29,26 @@ public class EquipamentoView {
             System.out.println("| [0] Sair                     |");
             System.out.println("+==============================+");
             System.out.print("Escolha uma opção: ");
-            op = Integer.parseInt(scanner.nextLine());
-            
-            switch (op){
-                case 1 ->{
-                    cadastrar();
+            try {
+                op = Integer.parseInt(scanner.nextLine());
+                switch (op){
+                    case 1 ->{
+                        cadastrar();
+                    }
+
+                    case 0 ->{
+                        System.out.println("Saindo...");
+                    }
+
+                    default -> {
+                        System.out.println("Opção incorreta!");
+                    }
                 }
-                
-                case 0 ->{
-                    System.out.println("Saindo...");
-                }
-                
-                default -> {
-                    System.out.println("Opção incorreta!");
-                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entre com um número");
+                op = -1;
             }
         } while (op != 0);
-        
     }
 
     public void cadastrar(){

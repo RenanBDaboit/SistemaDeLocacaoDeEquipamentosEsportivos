@@ -24,7 +24,7 @@ public class LocacaoController {
     }
 
     public boolean cadastrar(int id, int idAluno, int idEquipamento, String dataLocacao) {
-        return service.cadastrar(id, idAluno, idEquipamento, dataLocacao, repository);
+        return service.cadastrar(id, idAluno, idEquipamento, dataLocacao, alunoRepository, equipamentoRepository, repository, Locacao.Status.EM_ANDAMENTO);
     }
 
     public HashMap<Integer, Aluno> listarAlunos(){
@@ -33,6 +33,10 @@ public class LocacaoController {
 
     public HashMap<Integer, Equipamento> listarEquipamentos(){
         return equipamentoRepository.listar();
+    }
+
+    public boolean atualizar(int id, int idAluno, int idEquipamento, String dataLocacao){
+        return service.atualizar(id, idAluno, idEquipamento, dataLocacao, Locacao.Status.EM_ANDAMENTO, alunoRepository, equipamentoRepository, repository);
     }
 
 }
